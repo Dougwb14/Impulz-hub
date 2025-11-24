@@ -1,47 +1,52 @@
 import { useState } from 'react'
 import { mockData } from '../data/mockData'
-import { Search, X, Zap } from 'lucide-react'
+import { Search, Grid3x3, Zap, Clock, Cpu } from 'lucide-react'
 
-export default function Architectures({ user }) {
+export default function Architectures() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState('Todas')
   const [selectedArchitecture, setSelectedArchitecture] = useState(null)
 
-  const categories = ['all', ...new Set(mockData.architectures.map(a => a.category))]
+  const categories = ['Todas', 'Atendimento', 'Inteligência de Mercado', 'Vendas', 'Marketing', 'Produtividade']
 
   const filteredArchitectures = mockData.architectures.filter(arch => {
     const matchesSearch = arch.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          arch.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === 'all' || arch.category === selectedCategory
+    const matchesCategory = selectedCategory === 'Todas' || arch.category === selectedCategory
     return matchesSearch && matchesCategory
   })
 
   const getDifficultyColor = (difficulty) => {
-    switch(difficulty) {
-      case 'Básico': return 'bg-green-100 text-green-800'
-      case 'Intermediário': return 'bg-yellow-100 text-yellow-800'
-      case 'Avançado': return 'bg-red-100 text-red-800'
-      default: return 'bg-gray-100 text-gray-800'
+    switch (difficulty) {
+      case 'Básico':
+        return 'badge-success'
+      case 'Intermediário':
+        return 'badge-warning'
+      case 'Avançado':
+        return 'badge-danger'
+      default:
+        return 'badge-primary'
     }
   }
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-primary mb-2">Arquiteturas de Fluxos</h1>
-        <p className="text-text-secondary">Explore {mockData.architectures.length}+ arquiteturas completas de sistemas multi-agente</p>
+        <h1 className="text-3xl font-bold text-primary mb-2">Arquiteturas de Fluxos Multi-Agente</h1>
+        <p className="text-text-secondary">Explore {mockData.architectures.length}+ arquiteturas completas de sistemas multi-agente prontas para implementação</p>
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white rounded-lg p-6 border border-gray-200 space-y-4">
+      <div className="space-y-4">
         <div className="relative">
-          <Search className="absolute left-3 top-3 text-secondary" size={20} />
+          <Search className="absolute left-3 top-3 text-text-tertiary" size={20} />
           <input
             type="text"
             placeholder="Buscar arquiteturas..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20"
+            className="w-full pl-10 pr-4 py-3 border border-border rounded-lg focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-20"
           />
         </div>
 
@@ -50,13 +55,13 @@ export default function Architectures({ user }) {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
                 selectedCategory === category
-                  ? 'bg-secondary text-white'
-                  : 'bg-gray-100 text-text-primary hover:bg-gray-200'
+                  ? 'bg-secondary text-white shadow-lg'
+                  : 'bg-white border border-border text-text-primary hover:border-secondary'
               }`}
             >
-              {category === 'all' ? 'Todas' : category}
+              {category}
             </button>
           ))}
         </div>
@@ -64,84 +69,141 @@ export default function Architectures({ user }) {
 
       {/* Architectures Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredArchitectures.map((arch, index) => (
-          <button
-            key={index}
+        {filteredArchitectures.map((arch) => (
+          <div
+            key={arch.id}
+            className="card cursor-pointer"
             onClick={() => setSelectedArchitecture(arch)}
-            className="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg transition-all text-left"
           >
-            <div className="flex items-start justify-between mb-4">
-              <h3 className="font-bold text-primary flex-1">{arch.name}</h3>
-              <Zap className="text-secondary" size={20} />
+            <div className="card-header">
+              <div className="flex-1">
+                <h3 className="card-title">{arch.name}</h3>
+                <p className="card-description mt-2">{arch.description}</p>
+              </div>
+              <Grid3x3 size={24} className="text-secondary flex-shrink-0 ml-2" />
             </div>
-            <p className="text-sm text-text-secondary mb-4">{arch.description}</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs bg-secondary/10 text-secondary px-3 py-1 rounded-full">
-                {arch.category}
-              </span>
-              <span className={`text-xs px-3 py-1 rounded-full ${getDifficultyColor(arch.difficulty)}`}>
+
+            <div className="flex flex-wrap gap-2 mt-4">
+              <span className={`badge ${getDifficultyColor(arch.difficulty)}`}>
                 {arch.difficulty}
               </span>
-              <span className="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
+              <span className="badge badge-primary">
+                {arch.category}
+              </span>
+              <span className="badge badge-secondary">
                 {arch.agentCount} agentes
               </span>
             </div>
-          </button>
+
+            <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm text-text-secondary">
+                <Clock size={16} />
+                {arch.implementationTime}
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setSelectedArchitecture(arch)
+                }}
+                className="btn btn-secondary btn-sm"
+              >
+                Ver Detalhes
+              </button>
+            </div>
+          </div>
         ))}
       </div>
 
+      {filteredArchitectures.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-text-secondary text-lg">Nenhuma arquitetura encontrada</p>
+          <p className="text-text-tertiary mt-2">Tente ajustar seus filtros de busca</p>
+        </div>
+      )}
+
       {/* Architecture Detail Modal */}
       {selectedArchitecture && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-primary">{selectedArchitecture.name}</h2>
+        <div className="modal-overlay" onClick={() => setSelectedArchitecture(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <div>
+                <h2 className="modal-title">{selectedArchitecture.name}</h2>
+                <p className="text-text-secondary text-sm mt-1">{selectedArchitecture.category}</p>
+              </div>
               <button
                 onClick={() => setSelectedArchitecture(null)}
-                className="p-2 hover:bg-gray-100 rounded-lg"
+                className="modal-close"
               >
-                <X size={24} />
+                ✕
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="modal-body space-y-6">
+              {/* Descrição */}
               <div>
-                <h3 className="font-bold text-primary mb-2">Descrição</h3>
+                <h3 className="font-semibold text-primary mb-2">Descrição Completa</h3>
                 <p className="text-text-secondary">{selectedArchitecture.description}</p>
               </div>
 
+              {/* Badges */}
               <div>
-                <h3 className="font-bold text-primary mb-2">Componentes da Arquitetura</h3>
-                <div className="space-y-3">
-                  {selectedArchitecture.components.map((component, index) => (
-                    <div key={index} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                      <p className="font-semibold text-primary mb-1">{component}</p>
+                <h3 className="font-semibold text-primary mb-2">Informações Técnicas</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className={`badge ${getDifficultyColor(selectedArchitecture.difficulty)}`}>
+                    {selectedArchitecture.difficulty}
+                  </span>
+                  <span className="badge badge-primary">
+                    {selectedArchitecture.category}
+                  </span>
+                  <span className="badge badge-secondary">
+                    {selectedArchitecture.agentCount} agentes
+                  </span>
+                  <span className="badge badge-primary flex items-center gap-1">
+                    <Clock size={14} />
+                    {selectedArchitecture.implementationTime}
+                  </span>
+                </div>
+              </div>
+
+              {/* Componentes */}
+              <div>
+                <h3 className="font-semibold text-primary mb-3 flex items-center gap-2">
+                  <Cpu size={18} />
+                  Componentes da Arquitetura
+                </h3>
+                <div className="space-y-2">
+                  {selectedArchitecture.components.map((component, idx) => (
+                    <div key={idx} className="bg-gray-50 border border-border rounded-lg p-3 flex items-start gap-2">
+                      <span className="text-secondary font-bold mt-0.5">→</span>
+                      <span className="text-text-primary">{component}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h3 className="font-bold text-primary mb-2">Integrações</h3>
-                  <ul className="space-y-2">
-                    {selectedArchitecture.integrations.map((integration, index) => (
-                      <li key={index} className="text-sm text-text-secondary flex items-start">
-                        <span className="w-2 h-2 bg-secondary rounded-full mr-2 mt-1.5"></span>
-                        {integration}
-                      </li>
-                    ))}
-                  </ul>
+              {/* Integrações */}
+              <div>
+                <h3 className="font-semibold text-primary mb-3 flex items-center gap-2">
+                  <Zap size={18} />
+                  Integrações Necessárias
+                </h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {selectedArchitecture.integrations.map((integration, idx) => (
+                    <div key={idx} className="bg-blue-100 border border-blue-200 rounded-lg p-2 text-sm text-blue-800">
+                      {integration}
+                    </div>
+                  ))}
                 </div>
-                <div>
-                  <h3 className="font-bold text-primary mb-2">Detalhes</h3>
-                  <div className="space-y-2 text-sm">
-                    <p><span className="text-text-secondary">Categoria:</span> <span className="font-semibold text-primary">{selectedArchitecture.category}</span></p>
-                    <p><span className="text-text-secondary">Dificuldade:</span> <span className="font-semibold text-primary">{selectedArchitecture.difficulty}</span></p>
-                    <p><span className="text-text-secondary">Agentes:</span> <span className="font-semibold text-primary">{selectedArchitecture.agentCount}</span></p>
-                    <p><span className="text-text-secondary">Tempo:</span> <span className="font-semibold text-primary">{selectedArchitecture.implementationTime}</span></p>
-                  </div>
-                </div>
+              </div>
+
+              {/* Ação */}
+              <div className="flex gap-3 pt-4 border-t border-border">
+                <button
+                  onClick={() => setSelectedArchitecture(null)}
+                  className="btn btn-secondary flex-1"
+                >
+                  Fechar
+                </button>
               </div>
             </div>
           </div>

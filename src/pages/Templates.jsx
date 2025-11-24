@@ -1,54 +1,61 @@
 import { useState } from 'react'
+import { Search, Copy, Check, Zap } from 'lucide-react'
 import { mockData } from '../data/mockData'
-import { Search, Copy, X } from 'lucide-react'
 
-export default function Templates({ user }) {
+export default function Templates() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState('Todas')
   const [selectedTemplate, setSelectedTemplate] = useState(null)
-  const [copied, setCopied] = useState(false)
+  const [copiedId, setCopiedId] = useState(null)
 
-  const categories = ['all', ...new Set(mockData.templates.map(t => t.category))]
-
+  const categories = ['Todas', 'Inteligência de Mercado', 'Marketing', 'Vendas', 'Atendimento', 'Produtividade']
+  
   const filteredTemplates = mockData.templates.filter(template => {
     const matchesSearch = template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          template.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === 'all' || template.category === selectedCategory
+    const matchesCategory = selectedCategory === 'Todas' || template.category === selectedCategory
     return matchesSearch && matchesCategory
   })
 
+  // Simula a cópia para o feedback visual, já que o navigator.clipboard não funciona no sandbox
   const handleCopyPrompt = (prompt) => {
-    navigator.clipboard.writeText(prompt)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    // Em um ambiente real, usaria navigator.clipboard.writeText(prompt)
+    console.log("Prompt copiado (simulado):", prompt)
+    setCopiedId(prompt)
+    setTimeout(() => setCopiedId(null), 2000)
   }
 
   const getDifficultyColor = (difficulty) => {
-    switch(difficulty) {
-      case 'Básico': return 'bg-green-100 text-green-800'
-      case 'Intermediário': return 'bg-yellow-100 text-yellow-800'
-      case 'Avançado': return 'bg-red-100 text-red-800'
-      default: return 'bg-gray-100 text-gray-800'
+    switch (difficulty) {
+      case 'Básico':
+        return 'badge-success'
+      case 'Intermediário':
+        return 'badge-warning'
+      case 'Avançado':
+        return 'badge-danger'
+      default:
+        return 'badge-primary'
     }
   }
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-primary mb-2">Biblioteca de Templates</h1>
-        <p className="text-text-secondary">Explore {mockData.templates.length}+ templates profissionais de prompts</p>
+        <p className="text-text-secondary">Acesse mais de 50 templates profissionais de prompts para estruturar seus agentes de IA</p>
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white rounded-lg p-6 border border-gray-200 space-y-4">
+      <div className="space-y-4">
         <div className="relative">
-          <Search className="absolute left-3 top-3 text-secondary" size={20} />
+          <Search className="absolute left-3 top-3 text-text-tertiary" size={20} />
           <input
             type="text"
             placeholder="Buscar templates..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20"
+            className="w-full pl-10 pr-4 py-3 border border-border rounded-lg focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-20"
           />
         </div>
 
@@ -57,13 +64,13 @@ export default function Templates({ user }) {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
                 selectedCategory === category
-                  ? 'bg-secondary text-white'
-                  : 'bg-gray-100 text-text-primary hover:bg-gray-200'
+                  ? 'bg-secondary text-white shadow-lg'
+                  : 'bg-white border border-border text-text-primary hover:border-secondary'
               }`}
             >
-              {category === 'all' ? 'Todos' : category}
+              {category}
             </button>
           ))}
         </div>
@@ -71,91 +78,150 @@ export default function Templates({ user }) {
 
       {/* Templates Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredTemplates.map((template, index) => (
-          <button
-            key={index}
+        {filteredTemplates.map(template => (
+          <div
+            key={template.id}
+            className="card cursor-pointer"
             onClick={() => setSelectedTemplate(template)}
-            className="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg transition-all text-left"
           >
-            <div className="flex items-start justify-between mb-4">
-              <h3 className="font-bold text-primary flex-1">{template.name}</h3>
+            <div className="card-header">
+              <div className="flex-1">
+                <h3 className="card-title">{template.name}</h3>
+                <p className="card-description mt-2 line-clamp-3">{template.description}</p>
+              </div>
+              <Zap size={24} className="text-secondary flex-shrink-0 ml-2" />
             </div>
-            <p className="text-sm text-text-secondary mb-4">{template.description}</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs bg-secondary/10 text-secondary px-3 py-1 rounded-full">
-                {template.category}
-              </span>
-              <span className={`text-xs px-3 py-1 rounded-full ${getDifficultyColor(template.difficulty)}`}>
+
+            <div className="flex flex-wrap gap-2 mt-4">
+              <span className={`badge ${getDifficultyColor(template.difficulty)}`}>
                 {template.difficulty}
               </span>
+              <span className="badge badge-primary">
+                {template.category}
+              </span>
+              <span className="badge badge-secondary">
+                Plano: {template.minPlan}
+              </span>
             </div>
-          </button>
+
+            <div className="mt-4 pt-4 border-t border-border">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setSelectedTemplate(template)
+                }}
+                className="btn btn-secondary btn-sm w-full"
+              >
+                Ver Detalhes
+              </button>
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* Template Detail Modal */}
+      {filteredTemplates.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-text-secondary text-lg">Nenhum template encontrado</p>
+          <p className="text-text-tertiary mt-2">Tente ajustar seus filtros de busca</p>
+        </div>
+      )}
+
+      {/* Modal de Detalhes */}
       {selectedTemplate && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-primary">{selectedTemplate.name}</h2>
+        <div className="modal-overlay" onClick={() => setSelectedTemplate(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <div>
+                <h2 className="modal-title">{selectedTemplate.name}</h2>
+                <p className="text-text-secondary text-sm mt-1">{selectedTemplate.category}</p>
+              </div>
               <button
                 onClick={() => setSelectedTemplate(null)}
-                className="p-2 hover:bg-gray-100 rounded-lg"
+                className="modal-close"
               >
-                <X size={24} />
+                ✕
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="modal-body space-y-6">
+              {/* Descrição */}
               <div>
-                <h3 className="font-bold text-primary mb-2">Descrição</h3>
+                <h3 className="font-semibold text-primary mb-2">Descrição Completa</h3>
                 <p className="text-text-secondary">{selectedTemplate.description}</p>
               </div>
 
+              {/* Badges */}
               <div>
-                <h3 className="font-bold text-primary mb-2">Casos de Uso</h3>
-                <ul className="space-y-2">
-                  {selectedTemplate.useCases.map((useCase, index) => (
-                    <li key={index} className="text-sm text-text-secondary flex items-start">
-                      <span className="w-2 h-2 bg-secondary rounded-full mr-3 mt-1.5"></span>
-                      {useCase}
-                    </li>
-                  ))}
-                </ul>
+                <h3 className="font-semibold text-primary mb-2">Informações</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className={`badge ${getDifficultyColor(selectedTemplate.difficulty)}`}>
+                    {selectedTemplate.difficulty}
+                  </span>
+                  <span className="badge badge-primary">
+                    {selectedTemplate.category}
+                  </span>
+                  <span className="badge badge-secondary">
+                    Plano: {selectedTemplate.minPlan}
+                  </span>
+                </div>
               </div>
 
+              {/* Casos de Uso */}
+              {selectedTemplate.useCases && selectedTemplate.useCases.length > 0 && (
+                <div>
+                  <h3 className="font-semibold text-primary mb-2">Casos de Uso</h3>
+                  <ul className="space-y-2 list-disc list-inside text-text-secondary">
+                    {selectedTemplate.useCases.map((useCase, idx) => (
+                      <li key={idx} className="text-text-secondary">{useCase}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Prompt */}
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-bold text-primary">Prompt</h3>
+                <h3 className="font-semibold text-primary mb-2">Prompt Estruturado</h3>
+                <div className="bg-gray-50 border border-border rounded-lg p-4 relative">
+                  <pre className="text-sm text-text-primary whitespace-pre-wrap break-words font-mono">
+                    {selectedTemplate.prompt}
+                  </pre>
                   <button
                     onClick={() => handleCopyPrompt(selectedTemplate.prompt)}
-                    className="flex items-center gap-2 px-3 py-1 bg-secondary text-white rounded-lg hover:bg-secondary/90 text-sm"
+                    className="absolute top-2 right-2 p-2 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all"
                   >
-                    <Copy size={16} />
-                    {copied ? 'Copiado!' : 'Copiar'}
+                    {copiedId === selectedTemplate.prompt ? (
+                      <Check size={18} className="text-success" />
+                    ) : (
+                      <Copy size={18} className="text-text-secondary" />
+                    )}
                   </button>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <p className="text-sm text-text-primary whitespace-pre-wrap font-mono">
-                    {selectedTemplate.prompt}
-                  </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200">
-                <div>
-                  <p className="text-xs text-text-secondary mb-1">Categoria</p>
-                  <p className="font-semibold text-primary">{selectedTemplate.category}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-text-secondary mb-1">Dificuldade</p>
-                  <p className="font-semibold text-primary">{selectedTemplate.difficulty}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-text-secondary mb-1">Plano Mínimo</p>
-                  <p className="font-semibold text-primary">{selectedTemplate.minPlan}</p>
-                </div>
+              {/* Ação */}
+              <div className="flex gap-3 pt-4 border-t border-border">
+                <button
+                  onClick={() => handleCopyPrompt(selectedTemplate.prompt)}
+                  className="btn btn-primary flex-1"
+                >
+                  {copiedId === selectedTemplate.prompt ? (
+                    <>
+                      <Check size={18} />
+                      Prompt Copiado!
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={18} />
+                      Copiar Prompt
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={() => setSelectedTemplate(null)}
+                  className="btn btn-outline flex-1"
+                >
+                  Fechar
+                </button>
               </div>
             </div>
           </div>
