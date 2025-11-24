@@ -3645,3 +3645,11 @@ export const diagnosticQuestions = [
   }
 ]
 
+
+
+export const mockData = {
+  templates: promptTemplates,
+  architectures: architectures,
+  userPlans: userPlans,
+  diagnosticQuestions: diagnosticQuestions
+};
