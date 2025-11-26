@@ -500,7 +500,7 @@ Content Cluster:
 - Os subtítulos devem orientar claramente o conteúdo a ser desenvolvido, incluindo tópicos relevantes e sugestões de abordagem que aumentem a profundidade e autoridade do artigo.  
 - Evite redundância entre as palavras-chave secundárias, garantindo diversidade e abrangência temática no cluster.  
 - Priorize palavras-chave com bom volume de busca e intenção alinhada à palavra-chave principal para maximizar o potencial de ranqueamento.  
-- A saída deve ser clara, organizada e fácil de ser aplicada diretamente por equipes de conteúdo e SEO.`Content Cluster' com 10 palavras-chave secundárias. Para cada palavra-chave, sugira um título de artigo e um subtítulo que deve ser abordado. O objetivo é dominar o tópico nos mecanismos de busca.",
+- A saída deve ser clara, organizada e fácil de ser aplicada diretamente por equipes de conteúdo e SEO.`,
     minPlan: "Growth"
   },
   {
@@ -667,7 +667,7 @@ Elabore uma síntese final que compile as descobertas, riscos e sugestões de al
 - As sugestões de alteração devem preservar a viabilidade comercial e legal do contrato.  
 - Não omita nenhuma cláusula relevante relacionada aos termos indicados, mesmo que pareçam insignificantes.  
 - Mantenha o foco na mitigação de riscos para a empresa, sem comprometer oportunidades de upsell ou ganhos comerciais legítimos.  
-- Garanta a confidencialidade e discrição na análise, evitando exposição de dados sensíveis que possam constar no texto fornecido.`penalidade', 'prazo de entrega' e 'escopo'. Resuma os 3 principais riscos para a empresa e sugira uma alteração de texto para mitigar cada risco. O tom deve ser legal e preciso.",
+- Garanta a confidencialidade e discrição na análise, evitando exposição de dados sensíveis que possam constar no texto fornecido.`,
     minPlan: "Growth"
   },
   {
@@ -758,7 +758,7 @@ Estruture a saída em formato claro, com campos bem definidos para fácil leitur
 - As sugestões de intervenção devem ser práticas, específicas e relevantes para retenção, evitando termos genéricos.  
 - Mantenha o tom profissional e objetivo, garantindo clareza para o time de Customer Success.  
 - Ao detectar risco “Baixo”, o alerta deve indicar que o cliente não apresenta sinais relevantes de churn.  
-- Não inclua dados pessoais sensíveis além do identificador do cliente.`Alto'. Caso contrário, 'Baixo'. Gere um alerta para o time de CS com 3 sugestões de intervenção (ex: ligar, oferecer desconto, enviar material educativo).",
+- Não inclua dados pessoais sensíveis além do identificador do cliente.`,
     minPlan: "Growth"
   },
   {
@@ -919,7 +919,7 @@ Stakeholders Externos:
 - As estratégias de engajamento devem ser específicas e aplicáveis, evitando generalizações superficiais.  
 - Mantenha a linguagem formal, objetiva e acessível para profissionais de gestão e comunicação.  
 - Evite incluir stakeholders irrelevantes para o projeto ou com impacto insignificante.  
-- Sempre relacione interesses e estratégias ao contexto específico do projeto informado.`Poder' (Alto/Médio/Baixo) e 'Interesse' (Alto/Médio/Baixo). Sugira uma estratégia de comunicação para cada grupo.",
+- Sempre relacione interesses e estratégias ao contexto específico do projeto informado.`,
     minPlan: "Starter"
   },
   {
@@ -1641,7 +1641,7 @@ Formule três ações concretas, específicas e viáveis para otimizar a campanh
 
 # FORMATO DE SAÍDA  
 \`\`\`
-Criativo com menor CPA: [Nome do Criativo] (CPA: R\$ XX,XX)  
+Criativo com menor CPA: [Nome do Criativo] (CPA: R$ XX,XX)  
 Público com maior CTR: [Nome do Público] (CTR: XX,XX%)  
 
 Sugestões para otimizar a campanha visando [objetivo]:  
@@ -1800,7 +1800,7 @@ Resposta: "[Resposta estruturada]"
 - A resposta para objeção deve demonstrar empatia, conter argumentação de valor e terminar com um convite para avançar no diálogo.  
 - Evite jargões técnicos ou linguagem excessivamente formal; o tom deve ser natural e persuasivo.  
 - O roteiro deve ser adequado para cold calls, considerando que o lead não tem conhecimento prévio do produto.  
-- Todas as etapas devem estar alinhadas para conduzir o lead de forma fluida e lógica durante a ligação.`Não tenho tempo agora'.",
+- Todas as etapas devem estar alinhadas para conduzir o lead de forma fluida e lógica durante a ligação.`,
     minPlan: "Starter"
   },
   {
@@ -1828,7 +1828,7 @@ Lead:
 - Tamanho: 150 funcionários  
 - Segmento: Tecnologia  
 - Dor: Ineficiência no processo de atendimento ao cliente  
-- Orçamento: R\$ 50.000 anuais  
+- Orçamento: R$ 50.000 anuais  
 - Localização: São Paulo  
 - Estágio no funil: Consideração  
 - Histórico: Demonstra interesse em soluções de automação
@@ -1838,7 +1838,7 @@ Produto:
 - Proposta de Valor: Reduzir tempo de atendimento e aumentar satisfação do cliente  
 - Público-Alvo: Empresas de médio porte no setor de serviços  
 - Funcionalidades: Chatbot, integração CRM, dashboard de métricas  
-- Preço: R\$ 40.000 a R\$ 60.000 anuais  
+- Preço: R$ 40.000 a R$ 60.000 anuais  
 - Requisitos: Infraestrutura mínima de TI  
 \`\`\`
 
@@ -1889,7 +1889,7 @@ Recomendações (se aplicável):
 - Classifique o fit em categorias padronizadas para facilitar a tomada de decisão comercial.  
 - Caso algum dado essencial esteja ausente ou insuficiente para avaliação, destaque essa limitação na resposta.  
 - Mantenha a confidencialidade e privacidade dos dados do lead, evitando expô-los desnecessariamente.  
-- Sempre foque em fornecer insights práticos que possam efetivamente orientar o time de vendas.`Alto', 'Médio' ou 'Baixo'.",
+- Sempre foque em fornecer insights práticos que possam efetivamente orientar o time de vendas.`,
     minPlan: "Growth"
   },
   {
@@ -1958,7 +1958,7 @@ Proposta Comercial para [NOME DO CLIENTE]
 - Entregável 3: [Descrição detalhada]  
 
 3. Preço  
-O investimento total para a execução do serviço é de R\$ [VALOR], justificado pela qualidade, abrangência dos entregáveis e resultados esperados.  
+O investimento total para a execução do serviço é de R$ [VALOR], justificado pela qualidade, abrangência dos entregáveis e resultados esperados.  
 
 4. ROI Estimado  
 Baseado na métrica de [MÉTRICA], estimamos um retorno significativo que pode resultar em [descrição quantitativa do ROI], garantindo assim a viabilidade e o valor do investimento realizado.  
@@ -2127,7 +2127,7 @@ Obrigado pela atenção!
 - Personalize os e-mails sempre que possível para aumentar a relevância.  
 - Evite enviar a sequência em curto espaço de tempo; indique espaçamento ideal (ex: 3 a 5 dias entre e-mails).  
 - Inclua sempre uma chamada para ação clara, mas sutil, em cada e-mail.  
-- Respeite normas de privacidade e boas práticas de comunicação comercial.`check-in' amigável, o segundo deve adicionar valor (ex: um case study) e o terceiro deve ser um 'breakup e-mail' (última tentativa).",
+- Respeite normas de privacidade e boas práticas de comunicação comercial.`,
     minPlan: "Starter"
   },
   {
@@ -2284,13 +2284,13 @@ Informe o valor da Receita Mensal Recorrente estimada, arredondada para duas cas
 
 # FORMATO DE SAÍDA  
 \`\`\`
-Receita Mensal Recorrente (MRR) Esperada: R\$ 45.000,00
+Receita Mensal Recorrente (MRR) Esperada: R$ 45.000,00
 
 Detalhamento:  
 - Leads Mensais: 500  
 - Oportunidades Geradas (20%): 100  
 - Vendas Fechadas (30%): 30  
-- Ticket Médio: R\$ 1.500,00  
+- Ticket Médio: R$ 1.500,00  
 \`\`\`
 
 # REGRAS E RESTRIÇÕES  
@@ -2607,7 +2607,7 @@ Justificativa: O ticket relata inacessibilidade do servidor principal, impactand
 - A justificativa deve ser clara, concisa e conter elementos extraídos diretamente da análise das informações dadas.  
 - Não inclua recomendações de ações, apenas a classificação e a justificativa.  
 - Evite ambiguidade na escolha da categoria; opte pela urgência que melhor reflete o impacto e o contexto fornecidos.  
-- Mantenha a resposta em português claro e formal.`Baixa' (pergunta geral), 'Média' (problema não crítico), 'Alta' (impacto no negócio) ou 'Crítica' (sistema fora do ar). Justifique a classificação.",
+- Mantenha a resposta em português claro e formal.`,
     minPlan: "Starter"
   },
   {
@@ -2915,7 +2915,7 @@ Compile um relatório resumido contendo:
 - Não responda diretamente ao usuário; apenas recomende o canal oficial no relatório.  
 - Preserve a confidencialidade dos dados pessoais dos usuários, evitando expor informações sensíveis.  
 - Garanta que menções duplicadas sejam agrupadas para evitar redundância no relatório.  
-- Priorize a precisão na classificação para evitar falhas no direcionamento do atendimento.`ajuda', 'problema', 'não funciona'. Se encontrar, gere uma resposta padrão convidando o usuário a abrir um ticket no [LINK DO SUPORTE].",
+- Priorize a precisão na classificação para evitar falhas no direcionamento do atendimento.`,
     minPlan: "Starter"
   },
   {
@@ -3232,7 +3232,7 @@ O cliente relatou problemas para acessar a conta. O agente restaurou o acesso e 
     description: "Facilita sessões de brainstorming, gerando ideias criativas, avaliando-as e ajudando a refinar os conceitos mais promissores.",
     difficulty: "Básico",
     useCases: ["Inovação", "Resolução de problemas", "Criação de campanhas"],
-    prompt: `Você é um Facilitador de Brainstorming. Gere 10 ideias para [TEMA DO BRAINSTORMING]. Use a técnica `Pensamento Lateral'. Para as 3 melhores ideias, sugira um próximo passo de validação.",
+    prompt: `Você é um Facilitador de Brainstorming. Gere 10 ideias para [TEMA DO BRAINSTORMING]. Use a técnica `,
     minPlan: "Starter"
   }
 ];
